@@ -22,20 +22,15 @@ namespace ConsoleApp2
         static void Main(string[] args)
         {
 
-          
 
             try
-                {
+            {
                 string Connections = @"Server=(localdb)\MSSQLLocalDB;Database=dbUltra;Trusted_Connection=True";
 
                 //Primeiro ponto: Acessa o sistema e  baixar o execel fazer isso atraves do PhamtonJS
                 ///////////////////
                 ///////////////////
-                /////////////////
-                /////////////////////
-                //////////////////
-
-
+                /////////////// 
 
 
                 //Passo 2 : ler o novo excel
@@ -107,7 +102,7 @@ namespace ConsoleApp2
                 {
 
                     StringBuilder sb = new StringBuilder();
-                    sb.Append(" select   ");    
+                    sb.Append(" select   ");
                     sb.Append(" TrimestreAnterior.CC_COD_CLIENTE as 'TrimestreAnterior', ");
                     sb.Append(" BI.CC_COD_CLIENTE as 'BI', ");
                     sb.Append(" TrimestreAnterior.CC_RAZAO_SOCIAL, ");
@@ -122,7 +117,7 @@ namespace ConsoleApp2
                     sb.Append("  on ");
                     sb.Append(" BI.CC_COD_CLIENTE = TrimestreAnterior.CC_COD_CLIENTE AND ");
                     sb.Append(" BI.CC_COD_ENDERECO = TrimestreAnterior.CC_COD_ENDERECO AND ");
-                   sb.Append("  BI.DESCRICAO_ITEM_RESUMIDA = TrimestreAnterior.DESCRICAO_ITEM_RESUMIDA ");
+                    sb.Append("  BI.DESCRICAO_ITEM_RESUMIDA = TrimestreAnterior.DESCRICAO_ITEM_RESUMIDA ");
 
 
 
@@ -132,7 +127,7 @@ namespace ConsoleApp2
                     {
                         command.CommandTimeout = TimeSpan.FromMinutes(60).Seconds;
                         connections.Open();
-                        
+
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -162,22 +157,23 @@ namespace ConsoleApp2
                 }
 
             }
-            catch (Exception e )
+            catch (Exception e)
             {
 
             }
 
             //exportar o excel
             string nomeArquivo = "teste";
-            ExportDataSetToExcel(baseTratada,nomeArquivo);
+            ExportDataSetToExcel(baseTratada, nomeArquivo);
+
 
 
         }
-        public static void ExportDataSetToExcel(DataSet ds,string nome)
+        public static void ExportDataSetToExcel(DataSet ds, string nome)
         {
             string AppLocation = "";
             AppLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
-            AppLocation = AppLocation.Replace("file:\\", "");
+            AppLocation = AppLocation.Replace("file:\\", "");       
             string date = DateTime.Now.ToShortDateString();
             date = date.Replace("/", "_");
             string filepath = @"C:\\novodireito\" + nome + ".xlsx";
@@ -191,6 +187,7 @@ namespace ConsoleApp2
                 wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
                 wb.Style.Font.Bold = true;
                 wb.SaveAs(filepath);
+
             }
         }
     }
