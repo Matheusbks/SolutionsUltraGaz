@@ -1,12 +1,9 @@
 ﻿using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
 using ExcelDataReader;
-using OpenQA.Selenium.PhantomJS;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 
@@ -173,7 +170,7 @@ namespace ConsoleApp2
         {
             string AppLocation = "";
             AppLocation = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
-            AppLocation = AppLocation.Replace("file:\\", "");       
+            AppLocation = AppLocation.Replace("file:\\", "");
             string date = DateTime.Now.ToShortDateString();
             date = date.Replace("/", "_");
             string filepath = @"C:\\novodireito\" + nome + ".xlsx";
