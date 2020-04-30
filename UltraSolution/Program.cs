@@ -8,7 +8,7 @@ using System.IO;
 using System.Text;
 
 namespace ConsoleApp2
-{
+{   
 
     class Program
     {
@@ -41,15 +41,7 @@ namespace ConsoleApp2
                     // - arquivos do Excel OpenXml (formato 2007; * .xlsx)
                     using (var reader = ExcelReaderFactory.CreateReader(stream))
                     {
-
-                        // 1. Use os métodos do leitor,DataTable 
-                        do
-                        {
-                            while (reader.Read())
-                            {
-                                // reader.GetDouble(0);
-                            }
-                        } while (reader.NextResult());
+                        
 
                         // 2. Use o método de extensão AsDataSetx
                         var headers = new List<string>();
@@ -97,31 +89,9 @@ namespace ConsoleApp2
                 //Atualizar o trimestre anterior
                 using (SqlConnection connections = new SqlConnection(Connections))
                 {
-
-                    StringBuilder sb = new StringBuilder();
-                    sb.Append(" select   ");
-                    sb.Append(" TrimestreAnterior.CC_COD_CLIENTE as 'TrimestreAnterior', ");
-                    sb.Append(" BI.CC_COD_CLIENTE as 'BI', ");
-                    sb.Append(" TrimestreAnterior.CC_RAZAO_SOCIAL, ");
-                    sb.Append(" TrimestreAnterior.CCFILIAL, ");
-                    sb.Append(" TrimestreAnterior.DESCRICAO_ITEM_RESUMIDA, ");
-                    sb.Append(" TrimestreAnterior.CC_QTDE as 'TrimestreAnterior', ");
-                    sb.Append(" BI.CC_QTDE as 'BI',");
-                    // faz a conta =-20
-                    sb.Append(" ((TrimestreAnterior.CC_QTDE * 1)+( BI.CC_QTDE * 1)) as 'comparacao'  ");
-                    sb.Append(" from [dbUltra].[dbo].['Gerencial - Domiciliar$'] as BI ");
-                    sb.Append("  inner join [dbUltra].[dbo].Detalhamento$ as TrimestreAnterior ");
-                    sb.Append("  on ");
-                    sb.Append(" BI.CC_COD_CLIENTE = TrimestreAnterior.CC_COD_CLIENTE AND ");
-                    sb.Append(" BI.CC_COD_ENDERECO = TrimestreAnterior.CC_COD_ENDERECO AND ");
-                    sb.Append("  BI.DESCRICAO_ITEM_RESUMIDA = TrimestreAnterior.DESCRICAO_ITEM_RESUMIDA ");
-
-
-
-                    String sql = sb.ToString();
-
-                    using (SqlCommand command = new SqlCommand(sql, connections))
+                    using (SqlCommand command = new SqlCommand("RelDomiciliar", connections))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
                         command.CommandTimeout = TimeSpan.FromMinutes(60).Seconds;
                         connections.Open();
 
